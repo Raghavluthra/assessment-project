@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>news</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style2.css" media="all">
+
+</head>
+
+<body>
+<br> <br>   <br> <br>        
+            
+       <center> <h1><b>News Information</b></h1></center>
+        <center><h3>Enter News Channel:
+        <br> for example Gizmodo.com,Wired. </h3></center>
+        <br>
+<center><input type="text" placeholder="search news" id="query"></center>
+<br>
+    <center><button id="button">Click</button></center>
+       
+        <div id="xyz">  </div>
+        <div id="abc"></div>
+        <div id="def"></div>
+    
+    <div id="result">
+    </div>
+   
+</body>
+<script>
+    $("#button").click(
+       
+        () => {
+            var q = $("#query").val();
+            var url = `
+https://newsapi.org/v2/everything?q=bitcoin&apiKey=725b80d0d48c46e2b787cb6fddbfcd22`;
+            var result;
+            $.ajax(url).done(function (response) {
+            console.log(response);
+       
+            for(let i =0 ; i < response.articles.length;i++){
+            if(q == response.articles[i].source.name){
+            $("#result").append(
+            `<p> Author Name: ${response.articles[i].author} <br></p>
+             <p>   ID  = ${response.articles[i].source.id} </p>
+            <br>
+            <p>Name:${response.articles[i].source.name}</p><br>
+                <p>Content :  ${response.articles[i].content}
+                </p><br>
+                <p>Title:${response.articles[i].title}</p><br>
+                
+                `
+            )
+            }
+            else
+            {
+            console.log("no data found");
+            }
+               
+            }
+        }
+       
+    )});
+  function details(key){
+    url = `
+https://newsapi.org/v2/everything?q=bitcoin&${q}apiKey=725b80d0d48c46e2b787cb6fddbfcd22`;
+    $.ajax(url).done(function (response) {
+            console.log(response);
+            for(let i =0 ; i < response.articles.length;i++){
+                $("#result").append(
+            `<p>    author:${response.articles[i].author}
+                     </p>
+                <br>
+            <button onclick="hello(${response.articles[i].description})" >Team Details</button>
+                `
+            )
+            }
+           
+        })
+    }
+ 
+</script>
+
+</html>
